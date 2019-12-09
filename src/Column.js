@@ -1,10 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Droppable } from 'react-beautiful-dnd';
 
-const Column = ({ column }) => (
+import Task from './Task';
+
+const Column = ({ column, tasks }) => (
   <Container>
     <Title>{column.title}</Title>
-    <TaskList>Tasks</TaskList>
+    <Droppable droppableId={column.id}>
+      {provided => (
+        <TaskList ref={provided.innerRef} {...provided.droppableProps}>
+          {tasks.map((task, index) => (
+            <Task key={task.id} task={task} index={index} />
+          ))}
+          {provided.placeholder}
+        </TaskList>
+      )}
+    </Droppable>
   </Container>
 );
 
