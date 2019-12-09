@@ -4,11 +4,12 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const Task = ({ task, index }) => (
   <Draggable draggableId={task.id} index={index}>
-    {provided => (
+    {(provided, snapshot) => (
       <Container
         {...provided.draggableProps}
         {...provided.dragHandleProps}
         ref={provided.innerRef}
+        isDragging={snapshot.isDragging}
       >
         {task.content}
       </Container>
@@ -21,7 +22,7 @@ const Container = styled.div`
   border-radius: 4px;
   padding: 8px;
   margin-bottom: 8px;
-  background-color: #fff;
+  background-color: ${props => (props.isDragging ? 'lightgreen' : '#fff')};
 `;
 
 export default Task;
